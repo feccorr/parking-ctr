@@ -1,15 +1,20 @@
 package com.api.parkingcontrol.service.impl;
 
+import com.api.parkingcontrol.dto.ParkingSpotAssembler;
 import com.api.parkingcontrol.model.ParkingSpotModel;
 import com.api.parkingcontrol.repository.ParkingSpotRepository;
 import com.api.parkingcontrol.service.ParkingSpotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,6 +24,15 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
     @Autowired
     private ParkingSpotRepository parkingSpotRepository;
 
+    @Autowired
+    private PagedResourcesAssembler pagedResourcesAssembler;
+
+
+    private final ParkingSpotAssembler parkingSpotAssembler;
+
+    public ParkingSpotServiceImpl(ParkingSpotAssembler parkingSpotAssembler) {
+        this.parkingSpotAssembler = parkingSpotAssembler;
+    }
 
     @Override
     @Transactional
@@ -55,6 +69,24 @@ public class ParkingSpotServiceImpl implements ParkingSpotService {
     @Transactional
     public void delete(ParkingSpotModel parkingSpotModel) {
         parkingSpotRepository.delete(parkingSpotModel);
+    }
+
+    @Override
+    public CollectionModel<ParkingSpotModel> findAll(int page, int size, String[] sort, String dir) {
+        PageRequest pageRequest;
+        Sort.Direction direction;
+        if(sort == null) {
+            pageRequest = PageRequest.of(page, size);
+        }
+        else {
+            if(dir.equalsIgnoreCase("asc")) direction = Sort.Direction.ASC;
+            else direction = Sort.Direction.DESC;
+            pageRequest = PageRequest.of(page, size, Sort.by(direction, sort));
+        }
+        Page<ParkingSpotModel> parkingSpotPage = parkingSpotRepository.findAll(pageRequest);
+        if(!CollectionUtils.isEmpty(parkingSpotPage.getContent()))
+            return pagedResourcesAssembler.toModel(parkingSpotPage,parkingSpotAssembler);
+        return null;
     }
 }
 

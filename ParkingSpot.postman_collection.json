@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"parkingSpotNumber\": \"2418\",\n    \"licensePlateCar\": \"SSS8462\",\n    \"brandCar\": \"Toyota\",\n    \"modelCar\": \"q5\",\n    \"colorCar\": \"black\",\n    \"responsibleName\": \"Jonh doe\",\n    \"apartment\": \"386\",\n    \"block\": \"7\"\n}",
+					"raw": "{\n    \"parkingSpotNumber\": \"5490\",\n    \"licensePlateCar\": \"MAA8462\",\n    \"brandCar\": \"Chevrolet\",\n    \"modelCar\": \"Tracker\",\n    \"colorCar\": \"Branca\",\n    \"responsibleName\": \"Madara\",\n    \"apartment\": \"676\",\n    \"block\": \"7\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -39,7 +39,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/parking-spot?page=0&size=10&sort=registrationDate,ASC",
+					"raw": "http://localhost:8080/parking-spot?page=0&size=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -55,11 +55,12 @@
 						},
 						{
 							"key": "size",
-							"value": "10"
+							"value": "2"
 						},
 						{
 							"key": "sort",
-							"value": "registrationDate,ASC"
+							"value": "registrationDate,ASC",
+							"disabled": true
 						}
 					]
 				}

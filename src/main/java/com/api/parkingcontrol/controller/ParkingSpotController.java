@@ -6,17 +6,13 @@ import com.api.parkingcontrol.service.ParkingSpotService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,20 +45,18 @@ public class ParkingSpotController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ParkingSpotModel>> getAllParkingSpots(Pageable pageRequest){
-        Page<ParkingSpotModel> parkingPageList = parkingSpotService.findAll(pageRequest);
+    public ResponseEntity getAllParkingSpots(@RequestParam(required = false, defaultValue = "0") Integer page,
+                                                                     @RequestParam(required = false, defaultValue = "3") Integer size,
+                                                                     @RequestParam(required = false) String[] sort,
+                                                                     @RequestParam(required = false, defaultValue = "asc") String dir){
+        CollectionModel<ParkingSpotModel> parkingPageList = parkingSpotService.findAll(page, size, sort, dir);
 
-        if(parkingPageList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else{
-            List<ParkingSpotModel> listParkModel = parkingPageList.getContent();
-            for(ParkingSpotModel parking : listParkModel){
-                UUID id = parking.getId();
-                parking.add(linkTo(methodOn(ParkingSpotController.class).getOneParkingSpot(id)).withSelfRel());
-            }
 
-            return new ResponseEntity<List<ParkingSpotModel>>(listParkModel,HttpStatus.OK);
-        }
+         if(parkingPageList != null){
+             return ResponseEntity.ok(parkingPageList);
+         }
+        return ResponseEntity.noContent().build();
+
 
     }
 

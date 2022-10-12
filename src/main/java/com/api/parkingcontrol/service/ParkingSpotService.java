@@ -3,6 +3,7 @@ package com.api.parkingcontrol.service;
 import com.api.parkingcontrol.model.ParkingSpotModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,6 @@ public interface ParkingSpotService {
     Optional<ParkingSpotModel> findById(UUID id);
 
     void delete(ParkingSpotModel parkingSpotModel);
+
+    CollectionModel<ParkingSpotModel> findAll(int page, int size, String[] sort, String dir);
 }

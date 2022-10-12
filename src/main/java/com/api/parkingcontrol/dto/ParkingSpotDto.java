@@ -1,8 +1,10 @@
 package com.api.parkingcontrol.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,7 +13,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ParkingSpotDto {
+@Data
+public class ParkingSpotDto extends RepresentationModel<ParkingSpotDto> {
 
     @NotBlank
     @NotNull
