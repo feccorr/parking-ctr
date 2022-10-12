@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "1facdf06-7d4d-4b62-aed7-628db35244cd",
+		"name": "ParkingSpot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST parking spot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"parkingSpotNumber\": \"2418\",\n    \"licensePlateCar\": \"SSS8462\",\n    \"brandCar\": \"Toyota\",\n    \"modelCar\": \"q5\",\n    \"colorCar\": \"black\",\n    \"responsibleName\": \"Jonh doe\",\n    \"apartment\": \"386\",\n    \"block\": \"7\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parking-spot",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parking-spot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL parking spots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parking-spot?page=0&size=10&sort=registrationDate,ASC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parking-spot"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "registrationDate,ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ONE parking spot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parking-spot/a3e6c9bd-8ca7-4f18-b181-307db1409b9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parking-spot",
+						"a3e6c9bd-8ca7-4f18-b181-307db1409b9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Parking Spot",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/parking-spot/a3e6c9bd-8ca7-4f18-b181-307db1409b90",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parking-spot",
+						"a3e6c9bd-8ca7-4f18-b181-307db1409b90"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Parking spot",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"parkingSpotNumber\": \"2618\",\n    \"licensePlateCar\": \"RRS8462\",\n    \"brandCar\": \"audi\",\n    \"modelCar\": \"q5\",\n    \"colorCar\": \"white\",\n    \"responsibleName\": \"Jonh doe\",\n    \"apartment\": \"306\",\n    \"block\": \"7\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/parking-spot/824b4a79-3b49-4132-aae1-a63ba525aa1a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parking-spot",
+						"824b4a79-3b49-4132-aae1-a63ba525aa1a"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
