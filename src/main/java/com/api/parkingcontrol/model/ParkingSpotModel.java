@@ -3,6 +3,7 @@ package com.api.parkingcontrol.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ParkingSpotModel implements Serializable {
+public class ParkingSpotModel extends RepresentationModel<ParkingSpotModel> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -9,16 +9,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -46,9 +49,21 @@ public class ParkingSpotController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
-                                                                     Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
+    public ResponseEntity<List<ParkingSpotModel>> getAllParkingSpots(Pageable pageRequest){
+        Page<ParkingSpotModel> parkingPageList = parkingSpotService.findAll(pageRequest);
+
+        if(parkingPageList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            List<ParkingSpotModel> listParkModel = parkingPageList.getContent();
+            for(ParkingSpotModel parking : listParkModel){
+                UUID id = parking.getId();
+                parking.add(linkTo(methodOn(ParkingSpotController.class).getOneParkingSpot(id)).withSelfRel());
+            }
+
+            return new ResponseEntity<List<ParkingSpotModel>>(listParkModel,HttpStatus.OK);
+        }
+
     }
 
     @GetMapping("/{id}")
